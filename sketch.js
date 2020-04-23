@@ -1,5 +1,5 @@
 let sHeight = 400.0;
-let sWidth = 400.0;
+let sWidth = 800.0;
 let size = 7.5;
 let threshold = 12.5;
 let gHeight = 100;
@@ -11,25 +11,29 @@ var skip = 1;
 
 function setup() {
   createCanvas(sWidth, sHeight + gHeight);
-  pop_ = new population(30,1,1);
+  //slider = createSlider(0, 50, 25);
+  pop_ = new population(30, 10, 5, 0);
 }
 
 function draw() {
   background(220);
-  line(0,500,400,500);
+  //line(0,500,400,500);
+
 
   append(lines, pop_.draw());
-  var counterTeST = 0;
+
+  var count = 0;
   for(var i = 0; i < lines.length; i+=skip){
-    counterTeST ++;
+    count ++;
     strokeWeight(1);
     stroke('red');
-    line(counterTeST, sHeight + gHeight, counterTeST, sHeight + gHeight - lines[i][1]);
+    line(count, sHeight + gHeight, count, sHeight + gHeight - lines[i][1]);
     stroke('blue');
-    line(counterTeST, sHeight + gHeight - lines[i][1], counterTeST, sHeight + lines[i][2]);
+    line(count, sHeight + gHeight - lines[i][1], count, sHeight + lines[i][2]);
     stroke('green');
-    line(counterTeST, sHeight, counterTeST, sHeight + lines[i][2]);
+    line(count, sHeight, count, sHeight + lines[i][2]);
   }
+
   if(lines.length % sWidth == 0){
     skip ++;
   }
@@ -49,7 +53,7 @@ class dot {
     this.size = size;
     this.state = state;
     this.dir = dir;
-    this.speed = 5;
+    this.speed = 3;
     this.xSpeed = cos(this.dir);
     this.ySpeed = sin(this.dir);
     this.countdown = infectPeriod;
@@ -74,8 +78,10 @@ class dot {
   update(){
     var rad = this.size;
 
+    if (!this.distancing) {
     this.x += this.xSpeed * this.speed;
     this.y += this.ySpeed * this.speed;
+    }
 
     if (this.x + rad > sWidth){
       this.x = sWidth - (rad + 1);
@@ -150,7 +156,7 @@ class population {
     for(var i = 0; i < succ; i++){
       append(this.pop, new dot(random(0, sWidth), random(0, sHeight), size, random(0, 2*PI), "s", false));
     }
-    for(var h = 0; h < rem; h++){
+    for(var h = 0; h < distancing; h++){
       append(this.pop, new dot(random(0, sWidth), random(0, sHeight), size, random(0, 2*PI), "s", true));
     }
     for(var j = 0; j < infect; j++){
@@ -202,19 +208,33 @@ class population {
   }
 
   collide(i, j){
-    //uses the elastic collision equation (conserving energy)
-      //since mass is equal
-      //vfx1 = vix2
-      //vfx2 = vix1
-      //vfy1 = viy2
-      //vfy2 = viy1
-    //this swaps the velocities
-    var tempX = this.pop[i].getXSpeed();
-    this.pop[i].setXSpeed(this.pop[j].getXSpeed());
-    this.pop[j].setXSpeed(tempX);
-    var tempY = this.pop[i].getYSpeed();
-    this.pop[i].setYSpeed(this.pop[j].getYSpeed());
-    this.pop[j].setYSpeed(tempY);
+    //for social distancers --> mass is NOT equal
+          //because they don't move
+      //treat equation as if mass of 2 --> infinity
+      //both vx and vy of the moving object should flip
+    if(this.pop[i].distancing){
+      this.pop[j].setXSpeed(-this.pop[j].getXSpeed());
+      this.pop[j].setYSpeed(-this.pop[j].getYSpeed());
+    }
+    else if(this.pop[i].distancing){
+      this.pop[i].setXSpeed(-this.pop[i].getXSpeed());
+      this.pop[i].setYSpeed(-this.pop[i].getYSpeed());
+    }
+    else{
+      //uses the elastic collision equation (conserving energy)
+        //since mass is equal
+        //vfx1 = vix2
+        //vfx2 = vix1
+        //vfy1 = viy2
+        //vfy2 = viy1
+      //this swaps the velocities
+      var tempX = this.pop[i].getXSpeed();
+      this.pop[i].setXSpeed(this.pop[j].getXSpeed());
+      this.pop[j].setXSpeed(tempX);
+      var tempY = this.pop[i].getYSpeed();
+      this.pop[i].setYSpeed(this.pop[j].getYSpeed());
+      this.pop[j].setYSpeed(tempY);
+    }
 
     //this just prevents clusters by nudging the balls away by .5 in each direction
     this.pop[i].setX(this.pop[i].getX() + (this.pop[i].getX() - this.pop[j].getX())/abs(this.pop[i].getX() - this.pop[j].getX()) * 0.5);
