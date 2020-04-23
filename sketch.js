@@ -3,44 +3,72 @@ let sWidth = 800.0;
 let size = 7.5;
 let threshold = 12.5;
 let gHeight = 100;
+var start = false;
 var days = 0;
 var lines = [];
 var probInfectRate = 40;
 var infectPeriod = 175;
 var skip = 1;
 
+function start_(){
+  stop_();
+  start = true;
+  pop_ = new population(sSlider.value(), dSlider.value(), iSlider.value(), 0);
+}
+
+function stop_(){
+  start = false;
+  pop_ = 0;
+  lines = [];
+}
+
 function setup() {
   createCanvas(sWidth, sHeight + gHeight);
-  //slider = createSlider(0, 50, 25);
-  pop_ = new population(30, 10, 5, 0);
+  t1 = createP("");
+  button = createButton("Start Simulation");
+  button.mousePressed(start_);
+  button = createButton("Stop Simulation");
+  button.mousePressed(stop_);
+  t2 = createP("");
+
+  t3 = createP("Not Distancing");
+  sSlider = createSlider(0, 50, 20);
+  t4 = createP("Distancing");
+  dSlider = createSlider(0, 50, 20);
+  t5 = createP("Infected");
+  iSlider = createSlider(0, 50, 5);
+
 }
 
 function draw() {
   background(220);
   //line(0,500,400,500);
+  if(start){
+    append(lines, pop_.draw());
 
+    var count = 0;
+    for(var i = 0; i < lines.length; i+=skip){
+      count ++;
+      strokeWeight(1);
+      stroke('red');
+      line(count, sHeight + gHeight, count, sHeight + gHeight - lines[i][1]);
+      stroke('blue');
+      line(count, sHeight + gHeight - lines[i][1], count, sHeight + lines[i][2]);
+      stroke('green');
+      line(count, sHeight, count, sHeight + lines[i][2]);
+    }
 
-  append(lines, pop_.draw());
-
-  var count = 0;
-  for(var i = 0; i < lines.length; i+=skip){
-    count ++;
-    strokeWeight(1);
-    stroke('red');
-    line(count, sHeight + gHeight, count, sHeight + gHeight - lines[i][1]);
-    stroke('blue');
-    line(count, sHeight + gHeight - lines[i][1], count, sHeight + lines[i][2]);
-    stroke('green');
-    line(count, sHeight, count, sHeight + lines[i][2]);
+    if(lines.length % sWidth == 0){
+      skip ++;
+    }
+    pop_.update();
+    days ++;
   }
-
-  if(lines.length % sWidth == 0){
-    skip ++;
-  }
-  pop_.update();
-  days ++;
 
 }
+
+
+
 
 
 //~~~~~~~~~~ DOT ~~~~~~~~~~~~~~~//
