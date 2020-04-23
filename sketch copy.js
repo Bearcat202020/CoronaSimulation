@@ -43,7 +43,7 @@ function draw() {
 
 class dot {
 
-  constructor(x, y, size, dir, state, distancing){
+  constructor(x, y, size, dir, state){
     this.x = x;
     this.y = y;
     this.size = size;
@@ -53,7 +53,7 @@ class dot {
     this.xSpeed = cos(this.dir);
     this.ySpeed = sin(this.dir);
     this.countdown = infectPeriod;
-    this.distancing = distancing;
+
   }
 
   draw(){
@@ -93,12 +93,9 @@ class dot {
       this.y = 0 + (rad + 1);
       this.ySpeed *= - 1;
     }
-
-    //infection period
     if(this.state == "i"){
       this.countdown -- ;
     }
-    //if it's been infected for the whole period, it goes to removed
     if(this.countdown == 0){
       this.state = "r";
     }
@@ -143,22 +140,20 @@ class dot {
 
 class population {
 
-  constructor(succ, distancing, infect, rem){
+  constructor(succ, infect, rem){
 
     this.pop = [];
 
     for(var i = 0; i < succ; i++){
-      append(this.pop, new dot(random(0, sWidth), random(0, sHeight), size, random(0, 2*PI), "s", false));
-    }
-    for(var h = 0; h < rem; h++){
-      append(this.pop, new dot(random(0, sWidth), random(0, sHeight), size, random(0, 2*PI), "s", true));
+      append(this.pop, new dot(random(0, sWidth), random(0, sHeight), size, random(0, 2*PI), "s"));
     }
     for(var j = 0; j < infect; j++){
-      append(this.pop, new dot(random(0, sWidth), random(0, sHeight), size, random(0, 2*PI), "i", false));
+      append(this.pop, new dot(random(0, sWidth), random(0, sHeight), size, random(0, 2*PI), "i"));
     }
     for(var k = 0; k < rem; k++){
-      append(this.pop, new dot(random(0, sWidth), random(0, sHeight), size, random(0, 2*PI), "r", false));
+      append(this.pop, new dot(random(0, sWidth), random(0, sHeight), size, random(0, 2*PI), "r"));
     }
+
   }
 
   draw(){
@@ -189,7 +184,6 @@ class population {
     for(var i = 0; i < this.pop.length; i++){
       this.pop[i].update();
 
-      //collision detection
       for(var j = i+1; j < this.pop.length; j++){
 
         var distance = dist(this.pop[i].getX(), this.pop[i].getY(),this.pop[j].getX(), this.pop[j].getY());
@@ -202,25 +196,18 @@ class population {
   }
 
   collide(i, j){
-    //uses the elastic collision equation (conserving energy)
-      //since mass is equal
-      //vfx1 = vix2
-      //vfx2 = vix1
-      //vfy1 = viy2
-      //vfy2 = viy1
-    //this swaps the velocities
     var tempX = this.pop[i].getXSpeed();
     this.pop[i].setXSpeed(this.pop[j].getXSpeed());
     this.pop[j].setXSpeed(tempX);
+
     var tempY = this.pop[i].getYSpeed();
     this.pop[i].setYSpeed(this.pop[j].getYSpeed());
     this.pop[j].setYSpeed(tempY);
 
-    //this just prevents clusters by nudging the balls away by .5 in each direction
     this.pop[i].setX(this.pop[i].getX() + (this.pop[i].getX() - this.pop[j].getX())/abs(this.pop[i].getX() - this.pop[j].getX()) * 0.5);
+
     this.pop[i].setY(this.pop[i].getY() + (this.pop[i].getY() - this.pop[j].getY())/abs(this.pop[i].getY() - this.pop[j].getY()) * 0.5);
 
-    //checks if either is contaigous
     if(this.pop[i].state == "i" || this.pop[j].state == "i"){
       //if one of them touches the other
       //there's a chance it will infect
@@ -231,7 +218,6 @@ class population {
     }
   }
 
-  //chnges the state from sucsceptable to infected
   infect(i, j){
     if(this.pop[i].state == "s"){
       this.pop[i].state = "i";
