@@ -1,5 +1,5 @@
 let sHeight = 400.0;
-let sWidth = 800.0;
+let sWidth = 400.0;
 let size = 7.5;
 let threshold = 12.5;
 let gHeight = 100;
@@ -8,27 +8,25 @@ var refresh = false;
 var days = 0;
 var lines = [];
 var probInfectRate = 40;
-var infectPeriod = 175;
+var infectPeriod = [100, 300];
 var skip = 1;
 
 function start_(){
+  loop();
   pop_ = 0;
   lines = [];
   start = true;
   pop_ = new population(sSlider.value(), dSlider.value(), iSlider.value(), 0);
 }
 
-function stop_(){
-  start = false;
-}
-
 function setup() {
   createCanvas(sWidth, sHeight + gHeight);
+
   t1 = createP("");
   button = createButton("Start Simulation");
   button.mousePressed(start_);
   button = createButton("Stop Simulation");
-  button.mousePressed(stop_);
+  button.mousePressed(noLoop);
   t2 = createP("");
 
   t3 = createP("Not Distancing");
@@ -42,6 +40,14 @@ function setup() {
 
 function draw() {
   background(220);
+  strokeWeight(1);
+  stroke(0);
+  line(0, 0, sWidth, 0);
+  line(0, 0, 0, sHeight + gHeight);
+  line(sWidth, 0, sWidth, sHeight + gHeight);
+  line(0, sHeight, sWidth, sHeight);
+  line(0, sHeight + gHeight, sWidth, sHeight + gHeight);
+
   //line(0,500,400,500);
   if(start){
     append(lines, pop_.draw());
@@ -84,7 +90,7 @@ class dot {
     this.speed = 3;
     this.xSpeed = cos(this.dir);
     this.ySpeed = sin(this.dir);
-    this.countdown = infectPeriod;
+    this.countdown = random(infectPeriod[0], infectPeriod[1]);
     this.distancing = distancing;
   }
 
@@ -133,7 +139,7 @@ class dot {
       this.countdown -- ;
     }
     //if it's been infected for the whole period, it goes to removed
-    if(this.countdown == 0){
+    if(this.countdown <= 0){
       this.state = "r";
     }
   }
@@ -193,6 +199,7 @@ class population {
     for(var k = 0; k < rem; k++){
       append(this.pop, new dot(random(0, sWidth), random(0, sHeight), size, random(0, 2*PI), "r", false));
     }
+
   }
 
   draw(){
@@ -267,6 +274,9 @@ class population {
     //this just prevents clusters by nudging the balls away by .5 in each direction
     this.pop[i].setX(this.pop[i].getX() + (this.pop[i].getX() - this.pop[j].getX())/abs(this.pop[i].getX() - this.pop[j].getX()) * 0.5);
     this.pop[i].setY(this.pop[i].getY() + (this.pop[i].getY() - this.pop[j].getY())/abs(this.pop[i].getY() - this.pop[j].getY()) * 0.5);
+
+    this.pop[j].setX(this.pop[j].getX() + (this.pop[j].getX() - this.pop[i].getX())/abs(this.pop[j].getX() - this.pop[i].getX()) * 0.5);
+    this.pop[j].setY(this.pop[j].getY() + (this.pop[j].getY() - this.pop[i].getY())/abs(this.pop[j].getY() - this.pop[i].getY()) * 0.5);
 
     //checks if either is contaigous
     if(this.pop[i].state == "i" || this.pop[j].state == "i"){
