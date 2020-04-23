@@ -4,6 +4,7 @@ let size = 7.5;
 let threshold = 12.5;
 let gHeight = 100;
 var start = false;
+var refresh = false;
 var days = 0;
 var lines = [];
 var probInfectRate = 40;
@@ -11,15 +12,14 @@ var infectPeriod = 175;
 var skip = 1;
 
 function start_(){
-  stop_();
+  pop_ = 0;
+  lines = [];
   start = true;
   pop_ = new population(sSlider.value(), dSlider.value(), iSlider.value(), 0);
 }
 
 function stop_(){
   start = false;
-  pop_ = 0;
-  lines = [];
 }
 
 function setup() {
