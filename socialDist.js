@@ -1,8 +1,9 @@
 let sHeight = 400.0;
-let sWidth = 400.0;
+let sWidth = 800.0;
 let size = 7.5;
 let threshold = 12.5;
 let gHeight = 100;
+let bWidth = 100;
 var start = false;
 var refresh = false;
 var days = 0;
@@ -10,12 +11,14 @@ var lines = [];
 var probInfectRate = 40;
 var infectPeriod = [100, 300];
 var skip = 1;
+var timer = 100;
 
 function start_(){
   loop();
   pop_ = 0;
   lines = [];
   start = true;
+  timer = 100;
   pop_ = new population(sSlider.value(), dSlider.value(), iSlider.value(), 0);
 }
 
@@ -47,6 +50,9 @@ function draw() {
   line(sWidth, 0, sWidth, sHeight + gHeight);
   line(0, sHeight, sWidth, sHeight);
   line(0, sHeight + gHeight, sWidth, sHeight + gHeight);
+  line(sWidth - bWidth, sHeight , sWidth - bWidth, sHeight + gHeight);
+
+
 
   //line(0,500,400,500);
   if(start){
@@ -64,9 +70,28 @@ function draw() {
       line(count, sHeight, count, sHeight + lines[i][2]);
     }
 
-    if(lines.length % sWidth == 0){
+    //print((lines.length - bWidth) % sWidth);
+    if(lines.length % (sWidth - bWidth) == 0){
       skip ++;
+
     }
+
+    if(lines[lines.length-1][1] == 0){
+      timer --;
+    }
+
+    if(timer < 0){
+      noLoop();
+    }
+
+    textSize(12);
+    stroke("green");
+    text("Recovered: " + round(lines[lines.length-1][2]* pop_.pop.length/100, 0), sWidth - bWidth + 5, sHeight + 25);
+    stroke("blue");
+    text("Susceptible: " + round(lines[lines.length-1][0] * pop_.pop.length/100, 0), sWidth - bWidth + 5, sHeight + 55);
+    stroke("red");
+    text("Infected: " + round(lines[lines.length-1][1] * pop_.pop.length/100, 0), sWidth - bWidth + 5, sHeight + 85);
+
     pop_.update();
     days ++;
   }
@@ -104,7 +129,7 @@ class dot {
     else{
       stroke(0);
     }
-    strokeWeight(4);
+    strokeWeight(3);
     noFill();
     circle(this.x, this.y, this.size);
   }
