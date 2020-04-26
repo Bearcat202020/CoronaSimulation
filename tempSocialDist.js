@@ -25,7 +25,15 @@ function start_(){
 }
 
 function setup() {
-  createCanvas(sWidth, sHeight + gHeight);
+  title = createP("SIMULATION")
+  title.style("position" , "absolute");
+  title.style("font-size" , "30px");
+  title.style("left" , "350px");
+
+
+  let cnv = createCanvas(sWidth, sHeight + gHeight);
+  cnv.position(50, 75, "relative");
+
 
   t1 = createP("");
   button = createButton("Start Simulation");
