@@ -5,33 +5,65 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Corona</title>
+
+
   <style>
     body {
       padding: 0;
       margin: 0;
+    }
+    .navbar {
+      min-height: 80px;
+    }
+    #title{
+      margin: 0 auto;
+      text-align: center;
+    }
+    #test{
+      padding:20px;
     }
   </style>
   <script src="p5.js"></script>
 
 </head>
 
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+  <h3 id = "title">Coronavirus Simulator</h3>
+</nav>
+
 <body>
-  <div class="card" style="width: 18rem;">
-  <img class="card-img-top" src="..." alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+
+<br><br><br>
+
+  <div class="card-deck" id="test">
+    <div class="card">
+      <img src="img/ss2.png" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Simulation #1</h5>
+        <p class="card-text">this is king please change this later</p>
+        <a href="socialDist.html" class="btn btn-primary">Go to Simulation!</a>
+      </div>
+    </div>
+    <div class="card">
+      <img src="img/ss3.png" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Simulation #2</h5>
+        <p class="card-text">this is king please change this later</p>
+        <a href="tempSocialDist.html" class="btn btn-primary">Go to Simulation!</a>
+      </div>
+    </div>
+    <div class="card">
+      <img src="img/error.png" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Simulation #3</h5>
+        <p class="card-text">this is not done yet</p>
+        <a href="#" class="btn btn-primary">Go to Simulation!</a>
+      </div>
+    </div>
   </div>
-</div>
 
-  <a href = "socialDist.html">
-    <img src = "img/ss1.png" height = 400 width = 600></img>
-  </a>
 
-  <a href = "tempSocialDist.html">
-    dont forget to add a picture king
-  </a>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 
