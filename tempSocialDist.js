@@ -2,7 +2,7 @@ let sHeight = 400.0;
 let sWidth = 800.0;
 let size = 7.5;
 let threshold = 12.5;
-let gHeight = 100;
+let gHeight = 150;
 let bWidth = 100;
 var start = false;
 var refresh = false;
@@ -23,6 +23,21 @@ function start_(){
   distCounter = tSlider.value();
   pop_ = new population(sSlider.value(), dSlider.value(), iSlider.value(), 0);
 }
+function updateS1(){
+  t3.html("Not Distancing = " + sSlider.value())
+}
+
+function updateS2(){
+  t4.html("Distancing = " + dSlider.value())
+}
+
+function updateS3(){
+  t5.html("Infected = " + iSlider.value())
+}
+
+function updateS4(){
+  t6.html("Time Social Distancing = " + tSlider.value())
+}
 
 function setup() {
   title = createP("SIMULATION")
@@ -33,36 +48,75 @@ function setup() {
 
   let cnv = createCanvas(sWidth, sHeight + gHeight);
   cnv.position(50, 75, "relative");
+  //cnv.style("padding", "50px")
 
 
-  t1 = createP("");
-  button = createButton("Start Simulation");
+  button = createButton("START");
+  button.style("width", "50px");
+  button.style("height", "25px");
+  button.style("position" , "absolute");
+  button.style("top" , "440px");
+  button.style("left", "870px")
+  button.style("background-color", "#5ACD6F");
   button.mousePressed(start_);
-  button = createButton("Stop Simulation");
-  button.mousePressed(noLoop);
-  t2 = createP("");
+  button2 = createButton("STOP");
+  button2.mousePressed(noLoop);
+  button2.style("position" , "absolute");
+  button2.style("width", "50px");
+  button2.style("height", "25px");
+  button2.style("top" , "440px");
+  button2.style("left", "950px");
+  button2.style("background-color", "#FF6868");
 
-  t3 = createP("Not Distancing");
+
+
   sSlider = createSlider(0, 50, 20);
-  t4 = createP("Distancing");
+  sSlider.style("position" , "absolute");
+  sSlider.style("top" , "125px");
+  sSlider.style("left", "870px")
+  sSlider.input(updateS1);
+  t3 = createP("Not Distancing = " + sSlider.value());
+  t3.style("position" , "absolute");
+  t3.style("top" , "75px");
+  t3.style("left", "870px")
   dSlider = createSlider(0, 50, 20);
-  t5 = createP("Infected");
+  dSlider.style("position" , "absolute");
+  dSlider.style("top" , "215px");
+  dSlider.style("left", "870px")
+  dSlider.input(updateS2);
+  t4 = createP("Distancing = " + dSlider.value());
+  t4.style("position" , "absolute");
+  t4.style("top" , "165px");
+  t4.style("left", "870px")
   iSlider = createSlider(0, 50, 5);
-  t6 = createP("How Long Distance");
-  tSlider = createSlider(0, 800, 200);
+  iSlider.style("position" , "absolute");
+  iSlider.style("top" , "305px");
+  iSlider.style("left", "870px")
+  iSlider.input(updateS3);
+  t5 = createP("Infected = " + iSlider.value());
+  t5.style("position" , "absolute");
+  t5.style("top" , "255px");
+  t5.style("left", "870px")
+  tSlider = createSlider(0, 1200, 400);
+  tSlider.style("position" , "absolute");
+  tSlider.style("top" , "395px");
+  tSlider.style("left", "870px")
+  tSlider.input(updateS4);
+  t6 = createP("Time Social Distancing = " + tSlider.value());
+  t6.style("position" , "absolute");
+  t6.style("top" , "345px");
+  t6.style("left", "870px")
 
 }
 
 function draw() {
-  background(220);
+  background("white");
   strokeWeight(1);
   stroke(0);
   line(0, 0, sWidth, 0);
-  line(0, 0, 0, sHeight + gHeight);
-  line(sWidth, 0, sWidth, sHeight + gHeight);
+  line(0, 0, 0, sHeight);
+  line(sWidth, 0, sWidth, sHeight);
   line(0, sHeight, sWidth, sHeight);
-  line(0, sHeight + gHeight, sWidth, sHeight + gHeight);
-  line(sWidth - bWidth, sHeight , sWidth - bWidth, sHeight + gHeight);
 
 
 
@@ -98,11 +152,11 @@ function draw() {
     strokeWeight(1);
     textSize(12);
     stroke("green");
-    text("Recovered: " + round(lines[lines.length-1][2]* pop_.pop.length/100, 0), sWidth - bWidth + 5, sHeight + 25);
+    text("Recovered: " + round(lines[lines.length-1][2]* pop_.pop.length/100, 0), sWidth - bWidth + 10, sHeight + gHeight - 80);
     stroke("blue");
-    text("Susceptible: " + round(lines[lines.length-1][0] * pop_.pop.length/100, 0), sWidth - bWidth + 5, sHeight + 55);
+    text("Susceptible: " + round(lines[lines.length-1][0] * pop_.pop.length/100, 0), sWidth - bWidth + 10, sHeight + gHeight - 50);
     stroke("red");
-    text("Infected: " + round(lines[lines.length-1][1] * pop_.pop.length/100, 0), sWidth - bWidth + 5, sHeight + 85);
+    text("Infected: " + round(lines[lines.length-1][1] * pop_.pop.length/100, 0), sWidth - bWidth + 10, sHeight + gHeight - 20);
 
     pop_.update();
     days ++;
@@ -134,7 +188,7 @@ class dot {
 
   draw(){
     if(this.state == "s"){
-      stroke(255);
+      stroke(200);
     }
     else if(this.state == "i"){
       stroke('red');
