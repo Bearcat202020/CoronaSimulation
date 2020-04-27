@@ -10,6 +10,7 @@
     body {
       padding: 0;
       margin: 0;
+      font-family: "Trebuchet MS", Helvetica, sans-serif;
     }
     .container-fluid{
       position: absolute;
@@ -35,8 +36,12 @@
 
 <body>
   <div class="container-fluid">
-    <h3>Description</h3>
-    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+    <h3>Overall Simulation</h3>
+    <p>This is based off the S-I-R Model of epidemiology: more info here and here. A person can either be S - susceptible, I - infected, or R - recovered (or more pessimistically, removed). When the simulation starts, the people are set loose to start bouncing off of each other and the walls in a confined space. Upon collision, any infected person has a chance of infecting a susceptible person, but a removed is immune to infection. In real life, the two biggest factors over death count are the peak height of the curve and the total amount of people recovered -- which is why it's so important to flatten the curve!</p>
+    <h3>This Simulation</h3>
+    <p> This allows you to play around with how long people social distance for, and see how duration affects infection. Alongside controlling the amount of people who social distance and those who don't, you can use the bottom slider to change how long people social distance for (in ticks).</p>
+    <h3>Graph</h3>
+    <p>The graph displays the percentage of Susceptible, Infected, and Recovered people over time. </p>
   </div>
   <a href = ../index.html> <button type="button" class="btn btn-primary btn-lg" id="return"><b>Return Home</b></button> </a>
 </body>

@@ -40,10 +40,10 @@ function updateS4(){
 }
 
 function setup() {
-  title = createP("SIMULATION")
+  title = createP("TIMED SOCIAL DISTANCING")
   title.style("position" , "absolute");
   title.style("font-size" , "30px");
-  title.style("left" , "350px");
+  title.style("left" , "285px");
 
 
   let cnv = createCanvas(sWidth, sHeight + gHeight);

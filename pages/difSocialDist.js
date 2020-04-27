@@ -43,10 +43,10 @@ function updateS2(){
 // }
 
 function setup() {
-  title = createP("SIMULATION")
+  title = createP("PHYSICAL BARRIERS")
   title.style("position" , "absolute");
   title.style("font-size" , "30px");
-  title.style("left" , "350px");
+  title.style("left" , "320px");
 
 
   let cnv = createCanvas(sWidth, sHeight + gHeight);
@@ -73,7 +73,7 @@ function setup() {
 
 
 
-  gSlider = createSlider(20, 50, 30);
+  gSlider = createSlider(0, 150, 30);
   gSlider.style("position" , "absolute");
   gSlider.style("top" , "150px");
   gSlider.style("left", "870px")

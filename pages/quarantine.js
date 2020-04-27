@@ -42,15 +42,15 @@ function updateS2(){
 
 
 function setup() {
-  title = createP("SIMULATION")
+  title = createP("QUARANTINING POPULATIONS")
   title.style("position" , "absolute");
   title.style("font-size" , "30px");
-  title.style("left" , "350px");
+  title.style("left" , "240px");
 
   q = createP("QUARANTINE")
   q.style("position", "absolute")
   q.style("top", "43px")
-  q.style("left", "750px")
+  q.style("left", "755px")
   q.style("font-size", "15px")
 
 
@@ -163,7 +163,7 @@ class dot {
     this.size = size;
     this.state = state;
     this.dir = dir;
-    this.speed = 3;
+    this.speed = 1.5;
     this.xSpeed = cos(this.dir);
     this.ySpeed = sin(this.dir);
     this.countdown = random(infectPeriod[0], infectPeriod[1]);

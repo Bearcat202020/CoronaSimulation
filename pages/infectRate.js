@@ -34,7 +34,7 @@ function updateS2(){
 }
 
 function setup() {
-  title = createP("SIMULATION")
+  title = createP("INFECTION RATES")
   title.style("position" , "absolute");
   title.style("font-size" , "30px");
   title.style("left" , "350px");
