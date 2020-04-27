@@ -4,6 +4,7 @@ Hello!
 This is a fun side project I've been working on in quarantine.
 
 ## WHAT THIS IS
+![SIR](https://github.com/Bearcat202020/corona.github.io/blob/master/img/sirCurve.png)
 This is based off the S-I-R Model of epidemiology: [more info here](https://www.maa.org/press/periodicals/loci/joma/the-sir-model-for-spread-of-disease-the-differential-equation-model) and [here](https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology). A person can either be S - susceptible, I - infected, or R - recovered (or more pessimistically, removed). When the simulation starts, the people are set loose to start bouncing off of each other and the walls in a confined space. Upon collision, any infected person has a chance of infecting a susceptible person, but a removed is immune to infection.
 
 ## WHY MAKE THIS
