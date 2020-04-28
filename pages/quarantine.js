@@ -35,7 +35,7 @@ function updateS1(){
 }
 
 function updateS2(){
-  t4.html("Asymptomatic Probability = " + iSlider.value())
+  t4.html("Asymptomatic Probability = " + iSlider.value() + "%")
   asymptomProbs = iSlider.value();
 
 }
@@ -92,7 +92,7 @@ function setup() {
   iSlider.style("top" , "240px");
   iSlider.style("left", "870px")
   iSlider.input(updateS2);
-  t4 = createP("Asymptomatic Probability = " + iSlider.value());
+  t4 = createP("Asymptomatic Probability = " + iSlider.value() + "%");
   t4.style("position" , "absolute");
   t4.style("top" , "190px");
   t4.style("left", "870px");
@@ -119,9 +119,9 @@ function draw() {
     for(var i = 0; i < lines.length; i++){
       stroke('red');
       rect((i*width)/n, height - lines[i][1], width/n, lines[i][1]);
-      stroke('blue')
+      stroke(200)
       rect((i*width)/n, height - lines[i][1] - lines[i][0], width/n, lines[i][0]);
-      stroke('green')
+      stroke("#000099")
       rect((i*width)/n, height - lines[i][1] - lines[i][0] - lines[i][2], width/n, lines[i][2]);
     }
 
@@ -135,9 +135,9 @@ function draw() {
 
     strokeWeight(1);
     textSize(12);
-    stroke("green");
+    stroke("#000099");
     text("Recovered: " + round(lines[lines.length-1][2]* pop_.pop.length/100, 0), sWidth - bWidth + 10, sHeight + gHeight - 80);
-    stroke("blue");
+    stroke(200);
     text("Susceptible: " + round(lines[lines.length-1][0] * pop_.pop.length/100, 0), sWidth - bWidth + 10, sHeight + gHeight - 50);
     stroke("red");
     text("Infected: " + round(lines[lines.length-1][1] * pop_.pop.length/100, 0), sWidth - bWidth + 10, sHeight + gHeight - 20);
@@ -181,7 +181,7 @@ class dot {
       stroke('red');
     }
     else if(this.state == "r"){
-      stroke(0);
+      stroke("#000099");
     }
     else{
       stroke("orange")
@@ -246,7 +246,7 @@ class dot {
 
   float(){
     if(this.x < sWidth - qWidth + 50){
-      this.x += 5;
+      this.x += 7.5;
     }
     else{
       this.paralyzed = false;
@@ -337,6 +337,7 @@ class population {
   }
 
   update(){
+
     for(var i = 0; i < this.pop.length; i++){
       if(!this.pop[i].paralyzed){
         this.pop[i].update();
@@ -350,7 +351,7 @@ class population {
 
         var distance = dist(this.pop[i].getX(), this.pop[i].getY(),this.pop[j].getX(), this.pop[j].getY());
 
-        if(distance <= threshold){
+        if(distance <= threshold && !this.pop[i].paralyzed && !this.pop[j].paralyzed){
           this.collide(i, j);
         }
       }
@@ -406,7 +407,7 @@ class population {
 
   //chnges the state from sucsceptable to infected
   infect(i, j){
-    if(this.pop[i].state == "s"){
+    if(this.pop[i].state == "s" && !this.pop[j].paralyzed){
       var rand = random(0, 100);
       if(rand < asymptomProbs){
         this.pop[i].state = "a";
@@ -415,7 +416,7 @@ class population {
         this.pop[i].state = "i";
       }
     }
-    if(this.pop[j].state == "s"){
+    if(this.pop[j].state == "s" && !this.pop[i].paralyzed){
       var rand = random(0, 100);
       if(rand < asymptomProbs){
         this.pop[j].state = "a";

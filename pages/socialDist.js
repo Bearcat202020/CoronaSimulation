@@ -117,9 +117,9 @@ function draw() {
     for(var i = 0; i < lines.length; i++){
       stroke('red');
       rect((i*width)/n, height - lines[i][1], width/n, lines[i][1]);
-      stroke('blue')
+      stroke(200)
       rect((i*width)/n, height - lines[i][1] - lines[i][0], width/n, lines[i][0]);
-      stroke('green')
+      stroke("#000099")
       rect((i*width)/n, height - lines[i][1] - lines[i][0] - lines[i][2], width/n, lines[i][2]);
     }
 
@@ -133,9 +133,9 @@ function draw() {
 
     strokeWeight(1);
     textSize(12);
-    stroke("green");
+    stroke("#000099");
     text("Recovered: " + round(lines[lines.length-1][2]* pop_.pop.length/100, 0), sWidth - bWidth + 10, sHeight + gHeight - 80);
-    stroke("blue");
+    stroke(200);
     text("Susceptible: " + round(lines[lines.length-1][0] * pop_.pop.length/100, 0), sWidth - bWidth + 10, sHeight + gHeight - 50);
     stroke("red");
     text("Infected: " + round(lines[lines.length-1][1] * pop_.pop.length/100, 0), sWidth - bWidth + 10, sHeight + gHeight - 20);
@@ -176,7 +176,7 @@ class dot {
       stroke('red');
     }
     else{
-      stroke(0);
+      stroke("#000099");
     }
     strokeWeight(3);
     noFill();
