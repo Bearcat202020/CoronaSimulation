@@ -58,6 +58,7 @@ function setup() {
   button.style("top" , "440px");
   button.style("left", "870px")
   button.style("background-color", "#5ACD6F");
+  button.style("text-align", "center");
   button.mousePressed(start_);
   button2 = createButton("STOP");
   button2.mousePressed(noLoop);
