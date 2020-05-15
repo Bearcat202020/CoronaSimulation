@@ -216,7 +216,7 @@ class dot {
       this.y -= 2;
       this.ySpeed *= - 1;
     }
-    if(this.y - rad < 0 || (this.y<barr.top() && (this.x+(rad/2)>barr.left() && this.x+(rad/2) < barr.right()) && this.y + rad > barr.top())){
+    if(this.y - rad < 0 || (this.y<barr.top() + 3 && (this.x+(rad/2)>barr.left() && this.x+(rad/2) < barr.right()) && this.y + rad > barr.top())){
       this.y += 2;
       this.ySpeed *= - 1;
     }
